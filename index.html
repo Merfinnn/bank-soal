@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f6f7f3">
+    <meta name="description" content="Temukan, pelajari, dan bagikan arsip soal ujian yang terstruktur.">
+    <title>Siap Ujian — Bank Soal Terstandardisasi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#konten-utama">Lewati ke konten utama</a>
+    <header class="topbar">
+      <a class="brand" href="#beranda" aria-label="Siap Ujian, beranda"><span class="brand-mark" aria-hidden="true">s.</span><span>siap<span class="brand-strong">ujian</span></span></a>
+      <nav class="main-nav" aria-label="Navigasi utama">
+        <button class="nav-link active" type="button" data-view="beranda">Beranda</button>
+        <button class="nav-link" type="button" data-view="jelajah">Eksplorasi Soal</button>
+        <button class="nav-link" type="button" data-view="kontribusi">Unggah Soal</button>
+      </nav>
+      <div class="topbar-actions"><a class="button button-quiet" href="/login">Masuk</a><a class="button button-dark" href="/register">Daftar</a></div>
+    </header>
+
+    <main id="konten-utama">
+      <section class="view active" id="view-beranda" aria-labelledby="judul-beranda">
+        <div class="page-shell home-shell">
+          <div class="hero-grid">
+            <div class="hero-copy">
+              <div class="eyebrow"><span class="eyebrow-dot"></span> BANK SOAL KAMPUS · TERBUKA UNTUK SEMUA</div>
+              <h1 id="judul-beranda">Belajar lebih siap,<br><span>mulai dari satu soal.</span></h1>
+              <p class="hero-description">Temukan arsip ujian yang tertata, pembahasan yang jelas, dan latihan yang sesuai program studimu.</p>
+              <div class="search-wrap hero-search">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg>
+                <input id="hero-search" type="search" placeholder="Cari Mata Kuliah, Kode Matkul, atau Topik RPS..." autocomplete="off" aria-label="Cari mata kuliah, kode mata kuliah, atau topik RPS">
+                <div class="suggestions" id="search-suggestions" role="listbox" aria-label="Saran pencarian"></div>
+              </div>
+              <div class="search-hints"><span>Sering dicari:</span><button type="button" class="search-chip" data-query="Struktur Data">Struktur Data</button><button type="button" class="search-chip" data-query="Manajemen">Manajemen</button><button type="button" class="search-chip" data-query="Pendidikan Matematika">Pendidikan Matematika</button></div>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+              <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
+              <div class="art-spark spark-one">✳</div><div class="art-spark spark-two">✦</div>
+              <div class="art-card art-card-back"><span class="mini-tag">ARSIP TERSTRUKTUR</span><div class="art-lines"><i></i><i></i><i></i></div><div class="art-diagram"><b></b><b></b><b></b></div></div>
+              <div class="art-card art-card-front"><span class="art-card-head"><span class="mini-tag">LATIHAN SOAL</span><span class="art-check">✓</span></span><strong>Belajar langkah<br>demi langkah</strong><span class="art-progress"><i></i></span><small>Soal terverifikasi komunitas</small></div>
+              <div class="art-sticker"><span>✦</span><b>Akses belajar<br>lebih setara</b></div>
+            </div>
+          </div>
+
+          <section class="selector-panel" aria-labelledby="selector-title">
+            <div class="selector-heading"><div><span class="section-kicker">PENCARIAN TERARAH</span><h2 id="selector-title">Pilih mata kuliah dalam tiga langkah</h2></div><span class="step-hint">FAKULTAS <i>→</i> PROGRAM STUDI <i>→</i> MATA KULIAH</span></div>
+            <div class="selector-row guided-selector">
+              <label class="select-field"><span>1 · Fakultas</span><select id="home-faculty"><option value="">Pilih fakultas</option></select></label><span class="selector-arrow">›</span>
+              <label class="select-field"><span>2 · Program Studi</span><select id="home-department" disabled><option value="">Pilih program studi</option></select></label><span class="selector-arrow">›</span>
+              <label class="select-field"><span>3 · Mata Kuliah</span><select id="home-course" disabled><option value="">Pilih mata kuliah</option></select></label>
+              <button class="button button-dark selector-go" id="guided-search" type="button" disabled>Temukan soal <span>→</span></button>
+            </div>
+          </section>
+
+          <section class="faculty-section" aria-labelledby="faculty-title">
+            <div class="section-heading"><div><span class="section-kicker">JELAJAHI KAMPUS</span><h2 id="faculty-title">Pilih fakultasmu</h2></div><span class="updated-label">7 fakultas · program studi terdaftar</span></div>
+            <div class="faculty-grid" id="faculty-grid"></div>
+          </section>
+
+          <div class="home-content-grid">
+            <section class="countdown-card"><div class="countdown-top"><span class="countdown-icon">◷</span><span class="countdown-label">JADWAL UJIAN TERDEKAT</span><span class="countdown-term">KALENDER AKADEMIK</span></div><div class="countdown-main"><div><h2>Struktur Data</h2><p>Ujian Tengah Semester · <span id="exam-countdown-date">18 November 2026</span></p></div><div class="countdown-number"><strong id="countdown-days">--</strong><span>HARI LAGI</span></div></div><div class="countdown-bottom"><div class="countdown-bar"><i></i></div><span>Mulai persiapan dengan paket soal populer.</span><button type="button" class="icon-arrow" data-open-course="Struktur Data" aria-label="Cari paket soal Struktur Data">→</button></div></section>
+            <section class="activity-card"><div class="activity-heading"><div><span class="section-kicker">REKOMENDASI KOMUNITAS</span><h2>Paket soal populer</h2></div><span class="activity-badge">Banyak dipelajari</span></div><div class="popular-paper-list" id="popular-papers"></div><button class="module-link" type="button" data-view="jelajah">Lihat semua arsip <span>→</span></button></section>
+          </div>
+          <footer class="footer"><span>© 2026 Siap Ujian</span><span>Belajar yang merata dimulai dari akses yang setara.</span><button type="button" data-view="kontribusi">Bagikan soalmu <span>→</span></button></footer>
+        </div>
+      </section>
+
+      <section class="view" id="view-jelajah" aria-labelledby="judul-jelajah">
+        <div class="page-shell catalog-shell">
+          <div class="page-intro"><div><div class="breadcrumb">Beranda <span>/</span> Eksplorasi Soal</div><span class="section-kicker">KATALOG SOAL KAMPUS</span><h1 id="judul-jelajah">Temukan arsip ujianmu.</h1><p>Cari berdasarkan fakultas, program studi, semester, atau topik RPS.</p></div><button class="button button-dark" type="button" data-view="kontribusi">＋ Unggah soal</button></div>
+          <div class="catalog-search-row"><label class="search-wrap catalog-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg><input id="catalog-search" type="search" placeholder="Cari mata kuliah, kode matkul, atau topik RPS..." aria-label="Cari arsip soal"></label><button class="text-button" id="reset-filters" type="button">Atur ulang filter</button></div>
+          <div class="filter-pills" aria-label="Filter katalog">
+            <label class="filter-pill"><span>Fakultas</span><select id="filter-faculty"><option value="">Semua fakultas</option></select></label>
+            <label class="filter-pill"><span>Program Studi</span><select id="filter-department" disabled><option value="">Semua program studi</option></select></label>
+            <label class="filter-pill"><span>Semester</span><select id="filter-semester"><option value="">Semua semester</option><option value="1">Semester 1</option><option value="2">Semester 2</option><option value="3">Semester 3</option><option value="4">Semester 4</option><option value="5">Semester 5</option><option value="6">Semester 6</option><option value="7">Semester 7</option><option value="8">Semester 8</option></select></label>
+            <label class="filter-pill"><span>Status Pembahasan</span><select id="filter-discussion"><option value="">Semua soal</option><option value="ada">Ada Pembahasan</option><option value="mentah">Soal Mentah</option></select></label>
+          </div>
+          <section class="catalog-results" aria-label="Hasil eksplorasi soal">
+            <div class="catalog-toolbar"><div><h2>Arsip ujian <span id="result-count">0</span></h2><p id="catalog-summary">Pilih filter untuk mempersempit pencarian.</p></div><label class="sort-label">Urutkan<select id="sort-select"><option value="popular">Paling populer</option><option value="newest">Tahun terbaru</option><option value="oldest">Tahun terlama</option></select></label></div>
+            <div class="question-grid" id="question-grid"></div>
+            <div class="empty-state" id="empty-state" hidden><span>⌕</span><h3>Soal belum ditemukan</h3><p>Coba pilihan fakultas atau kata kunci yang berbeda.</p><button class="button button-outline" type="button" id="empty-reset">Atur ulang pencarian</button></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="view-belajar" aria-labelledby="judul-belajar">
+        <div class="page-shell study-shell">
+          <div class="breadcrumb"><button class="breadcrumb-back" type="button" data-view="jelajah">Eksplorasi Soal</button><span>/</span><span>Mode Belajar</span></div>
+          <div class="study-heading"><div><span class="section-kicker" id="study-paper-meta">UJIAN TENGAH SEMESTER · 2024</span><h1 id="judul-belajar">Struktur Data</h1><p id="study-course-meta">Fakultas Teknik · Informatika · Semester 4 · Topik: Tree dan Graph</p></div><div class="study-heading-actions"><button class="button button-outline" id="save-question" type="button"><span>♡</span> Simpan soal</button><button class="button button-dark" type="button" data-view="jelajah">← Kembali ke arsip</button></div></div>
+          <div class="study-meta"><span class="verified-badge"><i>✓</i> Terverifikasi</span><span class="meta-dot"></span><span>Dokumen arsip</span><span class="meta-dot"></span><span>Pembahasan ditinjau moderator</span></div>
+          <div class="study-layout">
+            <article class="problem-panel"><div class="problem-header"><span class="question-label">DOKUMEN UJIAN <span>·</span> PRATINJAU SOAL</span><button class="icon-button" id="open-document" type="button">Buka dokumen ↗</button></div>
+              <div id="study-document" class="study-document">
+                <div class="problem-content"><h2 id="study-question-title">Penelusuran pada Pohon Biner</h2><p id="study-question-text">Perhatikan pohon pencarian biner berikut. Setiap simpul menyimpan sebuah bilangan bulat dan memenuhi sifat BST. Operasi pencarian memiliki kompleksitas <span class="math-expression">\(O(h)\)</span>, dengan tinggi pohon <span class="math-expression">\(h\)</span>.</p><div class="tree-figure" role="img" aria-label="Pohon biner dengan akar 40; anak 20 dan 60; serta simpul 10, 30, 50, dan 70"><div class="tree-lines"><i class="line line-a"></i><i class="line line-b"></i><i class="line line-c"></i><i class="line line-d"></i><i class="line line-e"></i><i class="line line-f"></i></div><span class="tree-node node-40">40</span><span class="tree-node node-20">20</span><span class="tree-node node-60">60</span><span class="tree-node node-10">10</span><span class="tree-node node-30">30</span><span class="tree-node node-50">50</span><span class="tree-node node-70">70</span></div><div class="subquestion"><span class="subquestion-mark">a.</span><p>Tuliskan urutan kunjungan simpul untuk Inorder Traversal dan Postorder Traversal.</p></div><div class="subquestion"><span class="subquestion-mark">b.</span><p>Jelaskan mengapa hasil Inorder Traversal pada BST selalu menghasilkan urutan terurut menaik.</p></div></div>
+                <div class="document-frame" id="document-frame" hidden><div class="document-placeholder"><span>▤</span><h3>Pratinjau dokumen soal</h3><p>Pilih dokumen PDF atau foto dari kartu arsip untuk melihat pratinjau di sini.</p><button class="button button-outline" type="button" data-view="kontribusi">Unggah dokumen</button></div></div>
+              </div>
+              <div class="question-navigation"><button type="button" data-view="jelajah">← Kembali ke arsip</button><span>Dokumen <i>·</i> soal terstruktur</span><button type="button" data-view="kontribusi">Bagikan soal →</button></div>
+            </article>
+            <aside class="solution-panel"><div class="solution-tabs" role="tablist" aria-label="Materi soal"><button class="solution-tab active" role="tab" aria-selected="true" data-tab="pembahasan">Pembahasan</button><button class="solution-tab" role="tab" aria-selected="false" data-tab="diskusi">Diskusi Soal <span class="discussion-count">8</span></button></div>
+              <div class="solution-body" id="tab-pembahasan" role="tabpanel"><div class="solution-title"><span class="solution-check">✓</span><div><h2>Kunci Jawaban &amp; Pembahasan Langkah demi Langkah</h2><p>Ditinjau oleh moderator mata kuliah</p></div></div><div class="answer-key"><span>KUNCI JAWABAN</span><p>Inorder: <b>10, 20, 30, 40, 50, 60, 70</b><br>Postorder: <b>10, 30, 20, 50, 70, 60, 40</b></p></div><div class="solution-step"><span class="step-number">1</span><div><h3>Inorder: kiri → akar → kanan</h3><p>Kunjungi seluruh subtree kiri, kemudian akar, lalu subtree kanan untuk memperoleh urutan menaik.</p></div></div><div class="solution-step"><span class="step-number">2</span><div><h3>Postorder: kiri → kanan → akar</h3><p>Selesaikan subtree kiri (10, 30, 20), subtree kanan (50, 70, 60), lalu kunjungi akar 40.</p></div></div><div class="helpful-row"><span>Apakah pembahasan ini membantu?</span><button type="button" class="vote-button" data-vote="up" aria-label="Pembahasan membantu">👍 <span>24</span></button><button type="button" class="vote-button" data-vote="down" aria-label="Pembahasan kurang membantu">👎 <span>2</span></button></div><div class="difficulty-callout"><span>◉</span><p><b>Seberapa menantang soal ini?</b><small>Penilaianmu membantu mahasiswa lain.</small></p><button type="button" class="difficulty-vote" data-vote="mudah">Mudah</button><button type="button" class="difficulty-vote" data-vote="sulit">Sulit</button></div></div>
+              <div class="discussion-body" id="tab-diskusi" role="tabpanel" hidden><div class="discussion-header"><div><h2>Diskusi Soal</h2><p>Tanya dan berbagi cara berpikir dengan teman.</p></div></div><div class="comment"><span class="avatar avatar-blue">AR</span><div><div class="comment-meta"><b>Aditya Rahman</b><span>2 jam lalu</span></div><p>Untuk Postorder, apakah kita mengunjungi seluruh subtree kiri dulu sebelum ke kanan?</p><button type="button" class="comment-reply">↳ Balas · ♡ 3</button></div></div><div class="comment comment-nested"><span class="avatar avatar-purple">DL</span><div><div class="comment-meta"><b>Dewi Lestari <span class="author-badge">KONTRIBUTOR</span></b><span>1 jam lalu</span></div><p>Betul! Urutannya kiri → kanan → akar. Jadi subtree kiri selesai seluruhnya dulu, baru subtree kanan.</p><button type="button" class="comment-reply">♡ 5</button></div></div><form class="comment-form" id="comment-form"><label class="sr-only" for="comment-input">Tulis komentar</label><input id="comment-input" placeholder="Tulis pertanyaan atau tanggapan..."><button type="submit" aria-label="Kirim komentar">↑</button></form></div>
+              <div class="source-note"><span>ⓘ</span> Pembahasan terverifikasi · Dokumen arsip ditinjau moderator</div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="view-kontribusi" aria-labelledby="judul-kontribusi">
+        <div class="page-shell contribution-shell"><div class="breadcrumb"><button class="breadcrumb-back" type="button" data-view="beranda">Beranda</button><span>/</span><span>Unggah Soal</span></div>
+          <div class="contribution-heading"><span class="section-kicker">BANTU BELAJAR LEBIH MERATA</span><h1 id="judul-kontribusi">Bagikan arsip, bantu teman siap ujian.</h1><p>Unggah scan lembar ujian, PDF, atau tulis soal beserta pembahasannya.</p></div>
+          <div class="contribution-layout">
+            <section class="upload-card">
+              <div class="upload-mode-switch" role="tablist" aria-label="Pilih cara unggah"><button class="upload-mode active" type="button" role="tab" aria-selected="true" data-upload-mode="dokumen">Unggah PDF / Foto</button><button class="upload-mode" type="button" role="tab" aria-selected="false" data-upload-mode="manual">Tulis Soal Manual</button></div>
+              <div class="upload-notice"><span>ⓘ</span><p>Berkas PDF yang diunggah akan diverifikasi oleh moderator sebelum dipublikasikan.</p></div>
+              <div class="wizard-progress" aria-label="Tahapan unggah"><div class="wizard-step active" data-step-indicator="1"><span>1</span><div><b>Informasi ujian</b><small>Fakultas &amp; mata kuliah</small></div></div><i></i><div class="wizard-step" data-step-indicator="2"><span>2</span><div><b>Berkas &amp; solusi</b><small>Dokumen &amp; jawaban</small></div></div><i></i><div class="wizard-step" data-step-indicator="3"><span>3</span><div><b>Pratinjau</b><small>Kirim ke moderator</small></div></div></div>
+              <form id="upload-form" novalidate>
+                <div class="wizard-page active" data-step="1"><div class="form-step-heading"><span>LANGKAH 1 DARI 3</span><h2>Informasi ujian</h2><p>Metadata lengkap membantu mahasiswa menemukan dokumen yang sesuai.</p></div><div class="form-grid">
+                  <label class="form-field full-field"><span>Fakultas <b>*</b></span><select id="upload-faculty" required><option value="">Pilih fakultas</option></select><small class="field-error"></small></label>
+                  <label class="form-field"><span>Program Studi <b>*</b></span><select id="upload-department" required disabled><option value="">Pilih program studi</option></select><small class="field-error"></small></label>
+                  <label class="form-field"><span>Mata Kuliah <b>*</b></span><select id="upload-course" required disabled><option value="">Pilih mata kuliah</option></select><small class="field-error"></small></label>
+                  <label class="form-field"><span>Topik RPS <b>*</b></span><select id="upload-topic" required><option value="">Pilih topik RPS</option><option>Konsep Dasar</option><option>Materi Pokok</option><option>Analisis dan Penerapan</option><option>Latihan dan Studi Kasus</option><option>Topik lainnya</option></select><small class="field-error"></small></label>
+                  <label class="form-field"><span>Jenis Ujian <b>*</b></span><select id="upload-exam-type" required><option value="">Pilih jenis ujian</option><option value="UTS">Ujian Tengah Semester (UTS)</option><option value="UAS">Ujian Akhir Semester (UAS)</option></select><small class="field-error"></small></label>
+                  <label class="form-field"><span>Tahun Ujian <b>*</b></span><select id="upload-year" required><option value="">Pilih tahun ujian</option><option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option></select><small class="field-error"></small></label>
+                  <label class="form-field"><span>Semester</span><select id="upload-semester"><option value="">Pilih semester</option><option>Semester 1</option><option>Semester 2</option><option>Semester 3</option><option>Semester 4</option><option>Semester 5</option><option>Semester 6</option><option>Semester 7</option><option>Semester 8</option></select></label>
+                </div><div class="form-actions"><span><b>*</b> Wajib diisi</span><button type="button" class="button button-dark next-step">Lanjut: Berkas &amp; Solusi <span>→</span></button></div></div>
+
+                <div class="wizard-page" data-step="2"><div class="form-step-heading"><span>LANGKAH 2 DARI 3</span><h2 id="upload-step-title">Unggah dokumen soal</h2><p id="upload-step-description">Pilih berkas hasil pindai atau PDF untuk disertakan di arsip.</p></div>
+                  <div class="upload-workspace">
+                    <div class="upload-controls">
+                      <div class="dropzone" id="question-dropzone" tabindex="0" role="button" aria-label="Pilih atau letakkan berkas PDF atau foto soal">
+                        <input id="question-file" type="file" accept=".pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg" hidden>
+                        <span class="dropzone-icon">↑</span><b>Seret berkas ke sini</b><span>atau <u>pilih dari perangkatmu</u></span><small>PDF, PNG, atau JPG · Maksimal 15 MB</small>
+                      </div>
+                      <div class="selected-file" id="question-file-summary" hidden><span class="file-icon">▤</span><span><b id="question-file-name">Nama berkas</b><small id="question-file-size">Ukuran berkas</small></span><button type="button" id="remove-question-file" aria-label="Hapus berkas soal">×</button></div>
+                      <label class="form-field full-field manual-question-field" hidden><span>Teks Soal <b>*</b></span><textarea id="upload-question-text" rows="5" placeholder="Tuliskan konteks, instruksi, dan soal secara lengkap..."></textarea><small class="field-error"></small></label>
+                      <div class="solution-input-heading"><span>KUNCI JAWABAN &amp; PEMBAHASAN</span><small>Isi salah satu pilihan di bawah ini.</small></div>
+                      <label class="form-field full-field"><span>Pembahasan langkah demi langkah</span><textarea id="upload-explanation" rows="4" placeholder="Tuliskan kunci jawaban dan uraikan langkah penyelesaiannya..."></textarea><small class="field-hint">Bisa dikosongkan jika kamu melampirkan PDF kunci jawaban di bawah.</small></label>
+                      <div class="solution-file-row"><span>atau lampirkan PDF kunci jawaban</span><label class="button button-outline solution-file-button" for="solution-file">Pilih PDF<input id="solution-file" type="file" accept=".pdf,application/pdf" hidden></label></div>
+                      <div class="selected-file" id="solution-file-summary" hidden><span class="file-icon">▤</span><span><b id="solution-file-name">Nama berkas</b><small id="solution-file-size">Ukuran berkas</small></span><button type="button" id="remove-solution-file" aria-label="Hapus berkas pembahasan">×</button></div>
+                    </div>
+                    <div class="document-preview-card"><div class="document-preview-heading"><span>PRATINJAU DOKUMEN</span><span id="preview-file-type">Belum ada berkas</span></div><div class="document-preview" id="question-preview"><div class="preview-empty"><span>▤</span><b>Dokumenmu tampil di sini</b><small>PDF atau foto akan dipratinjau setelah dipilih.</small></div></div></div>
+                  </div>
+                  <label class="check-row consent-row"><input type="checkbox" id="upload-consent"><span class="checkmark"></span>Saya berhak membagikan arsip ini; dokumen bukan bocoran ujian aktif dan tidak memuat data pribadi.</label>
+                  <div class="form-actions"><button type="button" class="button button-outline previous-step">← Kembali</button><button type="button" class="button button-dark next-step">Lanjut: Pratinjau <span>→</span></button></div></div>
+
+                <div class="wizard-page" data-step="3"><div class="form-step-heading"><span>LANGKAH 3 DARI 3</span><h2>Pratinjau &amp; kirim</h2><p>Periksa metadata dan kelengkapan dokumen sebelum masuk antrean moderasi.</p></div><div class="submission-preview" id="submission-preview"></div><div class="moderation-notice"><span>◷</span><p><b>Status Verifikasi Moderator</b><br>Dokumen masuk antrean peninjauan dan belum ditayangkan di katalog.</p></div><div class="form-actions"><button type="button" class="button button-outline previous-step">← Perbaiki unggahan</button><button type="submit" class="button button-dark">Kirim untuk verifikasi <span>→</span></button></div></div>
+              </form>
+              <div class="submission-success" id="submission-success" hidden><div class="success-icon">✓</div><span class="section-kicker">KONTRIBUSI TERCATAT</span><h2>Terima kasih sudah berbagi!</h2><p>Berkasmu masuk ke antrean moderator dan akan diperiksa sebelum dipublikasikan.</p><div class="status-ticket"><span class="status-pending">◷ Menunggu verifikasi</span><span>Nomor kontribusi <b id="submission-number">SU-0000</b></span></div><button class="button button-dark" type="button" data-view="beranda">Kembali ke beranda</button></div>
+            </section>
+            <aside class="contribution-aside"><div class="impact-card"><div class="impact-art">✳</div><span class="section-kicker">BERBAGI DOKUMEN</span><h2>Satu arsip bisa membuka banyak kesempatan.</h2><p>Metadata yang tepat membantu teman menemukan dokumen belajar tanpa bergantung pada jaringan pertemanan.</p><div class="impact-stat"><strong>1.284</strong><span>soal dibagikan komunitas</span></div></div><div class="moderation-card"><div class="moderation-card-heading"><span class="moderation-icon">✓</span><div><b>Alur Verifikasi</b><small>Transparan dan terstruktur</small></div></div><div class="moderation-timeline"><div class="timeline-item done"><i></i><div><b>Dokumen dikirim</b><small>Metadata &amp; berkas lengkap</small></div><span>01</span></div><div class="timeline-item active"><i></i><div><b>Ditinjau moderator</b><small>Dokumen diperiksa sebelum tayang</small></div><span>02</span></div><div class="timeline-item"><i></i><div><b>Tayang di katalog</b><small>Dapat dipelajari mahasiswa</small></div><span>03</span></div></div></div><div class="quality-tip"><span>✦</span><div><b>Jaga kualitas arsip</b><p>Pastikan soal terbaca, metadata sesuai, dan pembahasan menjelaskan proses penyelesaian.</p></div></div></aside>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

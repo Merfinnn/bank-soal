@@ -1,0 +1,10 @@
+node_modules/
+generated/
+backend/src/generated/
+backend/dist/
+.next/
+/uploads/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
