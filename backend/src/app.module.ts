@@ -16,7 +16,11 @@ import { DiscussionsModule } from "./discussions/discussions.module";
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, envFilePath: [".env"] }),
-    ThrottlerModule.forRoot([{ name: "default", ttl: 60_000, limit: 120 }]),
+    ThrottlerModule.forRoot([{
+      name: "default",
+      ttl: 60_000,
+      limit: process.env.NODE_ENV === "development" ? 300 : 120
+    }]),
     PrismaModule,
     AuthModule,
     StorageModule,

@@ -23,10 +23,13 @@ import { RegisterDto } from "./dto/register.dto";
 
 const SESSION_COOKIE_OPTIONS = {
   httpOnly: true,
-  secure: true,
+  secure: process.env.NODE_ENV === "production",
   sameSite: "lax" as const,
   path: "/"
 };
+const LOGIN_THROTTLE = process.env.NODE_ENV === "development"
+  ? { limit: 30, ttl: 60_000 }
+  : { limit: 5, ttl: 15 * 60 * 1000 };
 
 @Controller()
 export class AuthController {
@@ -60,7 +63,7 @@ export class AuthController {
   @Post("login")
   @Public()
   @UseGuards(CsrfGuard)
-  @Throttle({ default: { limit: 5, ttl: 15 * 60 * 1000 } })
+  @Throttle({ default: LOGIN_THROTTLE })
   async login(
     @Body() input: LoginDto,
     @Req() request: AuthenticatedRequest,

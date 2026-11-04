@@ -3,6 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import { createHash, timingSafeEqual } from "node:crypto";
 import { PrismaService } from "../prisma/prisma.service";
 import { CSRF_HEADER_NAME, SESSION_COOKIE_NAME } from "./auth.constants";
+import { isAllowedOrigin, normalizeOrigin } from "./origin-policy";
 import type { AuthenticatedRequest } from "./auth.types";
 
 @Injectable()
@@ -42,23 +43,18 @@ export class CsrfGuard implements CanActivate {
   private assertSameOrigin(request: AuthenticatedRequest): void {
     const origin = request.get("origin");
     const referer = request.get("referer");
-    const source = origin ?? (referer ? this.readOrigin(referer) : null);
+    const source = origin ?? referer;
     const configuredOrigin = this.config.get<string>("APP_ORIGIN");
-    const expected = configuredOrigin
-      ? this.readOrigin(configuredOrigin)
-      : this.readOrigin(`${request.protocol}://${request.get("host") ?? ""}`);
-
-    if (!source || !expected || source !== expected) {
-      throw new ForbiddenException("Asal permintaan tidak diizinkan.");
+    const isDevelopment = process.env.NODE_ENV === "development";
+    if (!configuredOrigin) {
+      const requestOrigin = normalizeOrigin(
+        `${request.protocol}://${request.get("host") ?? ""}`
+      );
+      if (requestOrigin && normalizeOrigin(source) === requestOrigin) return;
     }
-  }
 
-  private readOrigin(value: string): string | null {
-    try {
-      const url = new URL(value);
-      return url.origin;
-    } catch {
-      return null;
+    if (!isAllowedOrigin(source, configuredOrigin, isDevelopment)) {
+      throw new ForbiddenException("Asal permintaan tidak diizinkan.");
     }
   }
 

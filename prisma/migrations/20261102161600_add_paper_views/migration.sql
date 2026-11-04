@@ -1,3 +1,5 @@
+-- This migration follows the initial schema because it references ExamPaper and User.
+
 -- CreateTable
 CREATE TABLE "PaperView" (
     "id" TEXT NOT NULL,

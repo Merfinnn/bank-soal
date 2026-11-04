@@ -1,0 +1,65 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-siap_ujian}
+      POSTGRES_USER: ${POSTGRES_USER:-siap_ujian}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-siap_ujian_local_password}
+    ports:
+      - "${POSTGRES_HOST_PORT:-5433}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: development
+      PORT: 3001
+      DATABASE_URL: "postgresql://${POSTGRES_USER:-siap_ujian}:${POSTGRES_PASSWORD:-siap_ujian_local_password}@db:5432/${POSTGRES_DB:-siap_ujian}?schema=public"
+      APP_ORIGIN: ${DOCKER_APP_ORIGIN:-http://localhost:3000}
+      AWS_REGION: ${AWS_REGION:-ap-southeast-3}
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./uploads:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["sh", "-c", "npx prisma migrate deploy && npm run api:start"]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3001/health').then((r) => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      API_INTERNAL_BASE_URL: http://backend:3001
+      NEXT_PUBLIC_API_BASE_URL: /api
+    ports:
+      - "3000:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
